@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  spring-image:
+    image: spring-image
+    container_name: spring-api-container
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-network
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres
+    container_name: postgresql_database
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: dockerDB
+      POSTGRES_USER: jocar
+    ports:
+      - "5433:5432"
+    networks:
+      - spring-network
+    volumes:
+      - postgresql-volume:/var/lib/postgresql
+
+networks:
+  spring-network:
+volumes:
+  postgresql-volume:
